@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resident Dashboard</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="resident.css" />
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar app-navbar sticky-top">
+  <div class="container-fluid px-4">
+    <span class="navbar-brand fw-bold text-white"><i class="bi bi-building"></i> SmartStay Resident</span>
+    <div class="d-flex gap-3 align-items-center">
+      <i class="bi bi-bell fs-5 text-white"></i>
+      <i class="bi bi-box-arrow-right fs-4 text-white" onclick="logoutResident()" title="Logout"></i>
+    </div>
+  </div>
+</nav>
+
+<div class="app-shell">
+
+  <!-- Welcome Card -->
+  <div class="welcome-card full-width-card text-center mx-0">
+    <h3 class="fw-bold mb-1">Welcome Back</h3>
+    <p class="mb-0 text-muted">Manage your society tasks efficiently</p>
+    <small class="d-block mt-2">Flat ID: <span id="residentFlat"></span></small>
+  </div>
+
+
+  <!-- Quick Actions -->
+  <h5 class="section-title mt-4">Quick Actions</h5>
+  <div class="feature-strip">
+    <div class="feature-tile" onclick="openModal('guestModal')">
+      <div class="feature-icon"><i class="bi bi-person-check"></i></div>
+      <div class="fw-semibold">Approve Guest</div>
+    </div>
+
+    <div class="feature-tile" onclick="openModal('complaintModal')">
+      <div class="feature-icon"><i class="bi bi-exclamation-circle"></i></div>
+      <div class="fw-semibold">Raise Complaint</div>
+    </div>
+
+    <div class="feature-tile" onclick="renderResidentNotices(); openModal('noticeModal')">
+      <div class="feature-icon"><i class="bi bi-megaphone"></i></div>
+      <div class="fw-semibold">View Notices</div>
+    </div>
+
+    <div class="feature-tile" onclick="renderMyComplaints(); openModal('historyModal')">
+      <div class="feature-icon"><i class="bi bi-clock-history"></i></div>
+      <div class="fw-semibold">My Complaints</div>
+    </div>
+  </div>
+
+</div> <!-- End of app-shell -->
+
+<!-- COMMUNITY GUIDELINES & INFO SECTION -->
+<div class="container my-5">
+  <h5 class="section-title mb-4"><i class="bi bi-info-circle me-2"></i>Community Information</h5>
+  
+  <div class="accordion info-accordion" id="infoAccordion">
+    
+    <!-- Community Guidelines -->
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingGuidelines">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGuidelines" aria-expanded="true" aria-controls="collapseGuidelines">
+          <i class="bi bi-shield-check me-2"></i> Community Guidelines
+        </button>
+      </h2>
+      <div id="collapseGuidelines" class="accordion-collapse collapse show" aria-labelledby="headingGuidelines" data-bs-parent="#infoAccordion">
+        <div class="accordion-body">
+          <ul class="mb-0">
+            <li>No loud music or noise after 10:00 PM</li>
+            <li>Maintain cleanliness in common areas</li>
+            <li>Park vehicles only in designated areas</li>
+            <li>Respect fellow residents' privacy and space</li>
+            <li>Dispose garbage at scheduled times only</li>
+            <li>No unauthorized renovations without admin approval</li>
+            <li>Keep pets on leash in common areas</li>
+            <li>Report any safety concerns immediately</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Maintenance Tips -->
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingMaintenance">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMaintenance" aria-expanded="false" aria-controls="collapseMaintenance">
+          <i class="bi bi-tools me-2"></i> Maintenance Tips
+        </button>
+      </h2>
+      <div id="collapseMaintenance" class="accordion-collapse collapse" aria-labelledby="headingMaintenance" data-bs-parent="#infoAccordion">
+        <div class="accordion-body">
+          <ul class="mb-0">
+            <li>Check your electricity meters regularly and report any issues</li>
+            <li>Report water leaks or plumbing issues promptly</li>
+            <li>Keep balconies and windows clean</li>
+            <li>Test fire alarms and smoke detectors monthly</li>
+            <li>Schedule AC maintenance twice a year</li>
+            <li>Keep elevator doors clear for smooth operation</li>
+            <li>Pay maintenance dues on time to avoid penalties</li>
+            <li>Inform management before any repair work</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Emergency Contacts -->
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingContacts">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseContacts" aria-expanded="false" aria-controls="collapseContacts">
+          <i class="bi bi-telephone me-2"></i> Emergency Contacts
+        </button>
+      </h2>
+      <div id="collapseContacts" class="accordion-collapse collapse" aria-labelledby="headingContacts" data-bs-parent="#infoAccordion">
+        <div class="accordion-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <strong>Society Contacts:</strong><br>
+              Guard Room: 999-111-2222<br>
+              Maintenance Office: 999-333-4444<br>
+              Admin Office: 999-555-6666<br>
+              Security Head: 999-777-8888
+            </div>
+            <div class="col-md-6">
+              <strong>Emergency Services:</strong><br>
+              Police: 100<br>
+              Fire Brigade: 101<br>
+              Ambulance: 102<br>
+              Women Helpline: 1091
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingFAQ">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFAQ" aria-expanded="false" aria-controls="collapseFAQ">
+          <i class="bi bi-question-circle me-2"></i> Frequently Asked Questions
+        </button>
+      </h2>
+      <div id="collapseFAQ" class="accordion-collapse collapse" aria-labelledby="headingFAQ" data-bs-parent="#infoAccordion">
+        <div class="accordion-body">
+          <div class="faq-item mb-3">
+            <strong>Q: How do I approve a guest entry?</strong>
+            <p class="mb-0">A: Use the "Approve Guest" feature to generate a unique PIN code for your guest. Share this PIN with your guest to allow entry.</p>
+          </div>
+          <div class="faq-item mb-3">
+            <strong>Q: What is the process for raising a complaint?</strong>
+            <p class="mb-0">A: Click on "Raise Complaint", provide a title and detailed description, then submit. You can track status in "My Complaints".</p>
+          </div>
+          <div class="faq-item mb-3">
+            <strong>Q: When is the maintenance due date?</strong>
+            <p class="mb-0">A: Maintenance is due by the 5th of every month. Late payments may incur penalties.</p>
+          </div>
+          <div class="faq-item mb-3">
+            <strong>Q: How can I book common facilities?</strong>
+            <p class="mb-0">A: Contact the admin office at least 48 hours in advance to book facilities like the clubhouse or party hall.</p>
+          </div>
+          <div class="faq-item mb-0">
+            <strong>Q: What are the visitor parking rules?</strong>
+            <p class="mb-0">A: Visitors can use designated visitor parking spots. No parking in resident spots. Maximum 4 hours parking allowed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- IMPROVED FOOTER -->
+<footer class="app-footer">
+  <div class="container py-4">
+    <div class="row gy-3">
+      <div class="col-md-4 text-center text-md-start">
+        <h6 class="mb-2"><i class="bi bi-building me-2"></i>SmartStay</h6>
+        <p class="mb-0 small">Your trusted society management partner</p>
+      </div>
+      <div class="col-md-4 text-center">
+        <p class="mb-1"><i class="bi bi-envelope me-2"></i>support@smartstay.com</p>
+        <p class="mb-0"><i class="bi bi-telephone me-2"></i>+91 98765 43210</p>
+      </div>
+      <div class="col-md-4 text-center text-md-end">
+        <p class="mb-0 small">© 2026 SmartStay Society Management</p>
+        <p class="mb-0 small">All rights reserved</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Modals -->
+<div class="modal fade" id="guestModal">
+  <div class="modal-dialog">
+    <div class="modal-content p-4">
+      <h5>Generate Guest Code</h5>
+      <input id="guestName" class="form-control mb-2" placeholder="Guest Name">
+      <input id="guestDate" type="date" class="form-control mb-3">
+      <button class="btn btn-primary w-100" onclick="generateGuest()">Generate</button>
+      <div id="guestResult" class="text-success mt-3"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="complaintModal">
+  <div class="modal-dialog">
+    <div class="modal-content p-4">
+      <h5>Raise Complaint</h5>
+      <input id="c_title" class="form-control mb-2" placeholder="Title">
+      <textarea id="c_details" class="form-control mb-3" placeholder="Details"></textarea>
+      <button class="btn btn-danger w-100" onclick="submitComplaint()">Submit</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="noticeModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content p-4">
+      <h5>Notices</h5>
+      <div id="resident-notices"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="historyModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content p-4">
+      <h5>My Complaint History</h5>
+      <div id="my-complaints"></div>
+    </div>
+  </div>
+</div>
+
+<script src="resident.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.getElementById('residentFlat').innerText = localStorage.getItem('loggedResident') || 'N/A';
+
+  // Unified modal opener
+  function openModal(id) {
+    const modalEl = document.getElementById(id);
+    const modal = new bootstrap.Modal(modalEl);
+    modal.show();
+  }
+</script>
+</body>
+</html>

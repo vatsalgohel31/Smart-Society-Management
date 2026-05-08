@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartStay Guard Dashboard</title>
+
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="guard.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#8d1c2f;">
+  <div class="container-fluid px-4">
+    <span class="navbar-brand fw-bold">
+      <i class="bi bi-shield-check me-2"></i>SmartStay Guard
+    </span>
+    <div class="ms-auto d-flex align-items-center gap-3">
+      <span class="text-white small"><i class="bi bi-clock me-1"></i><span id="currentTime"></span></span>
+      <button class="btn btn-outline-light btn-sm" onclick="logoutGuard()">
+        Logout <i class="bi bi-box-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="container my-4">
+
+  <!-- Welcome Section -->
+  <div class="row mb-4">
+    <div class="col-md-12">
+      <div class="welcome-banner">
+        <div class="row align-items-center">
+          <div class="col-md-8">
+            <h2 class="fw-bold mb-2">Welcome, Guard</h2>
+            <p class="text-muted mb-0">Manage guest approvals, visitor entries, and monitor activity efficiently</p>
+          </div>
+          <div class="col-md-4 text-end">
+            <div class="date-badge">
+              <i class="bi bi-calendar3 me-2"></i><span id="currentDate"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Forms -->
+  <div class="row g-4 mb-4">
+    <!-- Verify Guest -->
+    <div class="col-lg-6">
+      <div class="card shadow-sm p-3">
+        <h5 class="fw-bold mb-3"><i class="bi bi-person-check-fill me-2"></i>Verify Guest</h5>
+        <input id="g_name" class="form-control mb-2" placeholder="Visitor Name">
+        <input id="g_pin" class="form-control mb-2" placeholder="Enter Guest PIN">
+        <button class="btn btn-success w-100" onclick="verifyGuest()">
+          <i class="bi bi-check-circle me-2"></i>Verify & Allow Entry
+        </button>
+        <small id="lastVerified" class="d-block mt-2 text-muted"></small>
+      </div>
+    </div>
+
+    <!-- Add Visitor -->
+    <div class="col-lg-6">
+      <div class="card shadow-sm p-3">
+        <h5 class="fw-bold mb-3"><i class="bi bi-person-plus-fill me-2"></i>Add Visitor Entry</h5>
+        <div class="row g-2 mb-2">
+          <div class="col-md-4"><input id="flatId" class="form-control" placeholder="Flat ID"></div>
+          <div class="col-md-4"><input id="visitorName" class="form-control" placeholder="Visitor Name"></div>
+          <div class="col-md-4"><input id="purpose" class="form-control" placeholder="Purpose"></div>
+        </div>
+        <button class="btn btn-dark w-100" onclick="addVisitor()">
+          <i class="bi bi-plus-circle me-2"></i>Add Entry
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Today's Visitor Log -->
+  <div class="visitor-log-section mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="fw-bold mb-0"><i class="bi bi-journal-text me-2"></i>Today's Visitor Log</h5>
+      <span class="badge bg-danger" id="visitorCount">0 Visitors</span>
+    </div>
+    <div id="guard-logs" class="row row-cols-1 row-cols-md-2 g-3"></div>
+    <div id="emptyState" class="text-center py-5 text-muted">
+      <i class="bi bi-inbox" style="font-size: 3rem; opacity: 0.3;"></i>
+      <p class="mt-3">No visitor entries yet today</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- GUIDELINES & UPDATES SECTION - ABOVE FOOTER -->
+<div class="info-section">
+  <div class="container py-4">
+    <div class="row g-3">
+      <!-- Important Updates -->
+      <div class="col-lg-6">
+        <div class="info-card">
+          <h6 class="info-title"><i class="bi bi-megaphone me-2"></i>Important Updates</h6>
+          <ul class="info-list">
+            <li><strong>Today:</strong> Maintenance work on Block A lifts (10 AM - 2 PM)</li>
+            <li><strong>This Week:</strong> Monthly society meeting on 20th Feb at 6 PM</li>
+            <li><strong>Alert:</strong> New security protocol - verify all PINs carefully</li>
+            <li><strong>Notice:</strong> Delivery personnel parking restricted to Gate 2</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Security Guidelines -->
+      <div class="col-lg-6">
+        <div class="info-card">
+          <h6 class="info-title"><i class="bi bi-clipboard-check me-2"></i>Security Guidelines</h6>
+          <ul class="info-list">
+            <li>Always verify guest PIN before allowing entry</li>
+            <li>Check visitor purpose and destination flat carefully</li>
+            <li>Keep visitor logs updated in real-time</li>
+            <li>Report suspicious activity to admin immediately</li>
+            <li>Ensure all delivery personnel sign the logbook</li>
+            <li>Monitor CCTV cameras regularly during shift</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white py-3">
+  <div class="container text-center">
+    <p class="mb-1">Email: security@smartstay.com | Phone: +91 98765 43210</p>
+    <small>© 2026 SmartStay Society Management • All rights reserved</small>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="guard.js"></script>
+<script>
+  // Display current date and time
+  function updateDateTime() {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    const dateStr = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+    
+    document.getElementById('currentTime').textContent = timeStr;
+    document.getElementById('currentDate').textContent = dateStr;
+  }
+  
+  updateDateTime();
+  setInterval(updateDateTime, 60000);
+  
+  // Update visitor count
+  function updateVisitorCount() {
+    const logs = document.getElementById('guard-logs');
+    const count = logs.children.length;
+    document.getElementById('visitorCount').textContent = `${count} Visitor${count !== 1 ? 's' : ''}`;
+    document.getElementById('emptyState').style.display = count > 0 ? 'none' : 'block';
+  }
+  
+  setInterval(updateVisitorCount, 1000);
+</script>
+</body>
+</html>
